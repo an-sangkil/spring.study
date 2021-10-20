@@ -1,0 +1,19 @@
+logging:
+  file: logs/application-test.log
+#  pattern:
+#    console: "%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level %logger : %msg%n"
+#    file: "%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level [%thread] %logger : %msg%n"
+  level:
+    root: INFO
+    com.aereport: DEBUG
+#    org.springframework: INFO
+#    org.hibernate: ERROR
+#    org.hibernate.type: DEBUG #TRACE
+#    org.hibernate.type.BasicTypeRegistry : WARN
+spring:
+  rabbitmq:
+    host: 210.221.235.202
+    port: 5672
+    username: adteck
+    password: adteck1!
+

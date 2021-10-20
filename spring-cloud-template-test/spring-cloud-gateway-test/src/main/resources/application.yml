@@ -1,0 +1,45 @@
+server:
+  port: ${PORT:8080}
+---
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true  # 해당 옵션을 false로 하면 유레카 정보를 사용할뿐 자신의 정보를 다른 서버에게 제공하지 않는다.
+
+---
+management:
+  endpoint:
+    gateway:
+      enabled: true
+
+---
+spring:
+  application:
+    name: mos-gateway-server
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+      routes:
+        - id: ads-service
+          uri: lb://MOS-SERVICE-ADS
+          predicates:
+            - Path=/ads/**
+          filters:
+            - name: AdsFilter
+              args:
+                name: TestAds-name
+        - id: circuit-breaker-test
+          uri: http://localhost:8083
+          predicates:
+            - Path=/user/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userCircuitBreaker
+                fallbackUri: forward:/fallback/default
+            - name: UserFilter
+              args:
+                name: sangkil
+                message: this is user filter

@@ -1,0 +1,90 @@
+#----------------------------------------------------
+#  Spring Boot Spring 기본 설정
+#----------------------------------------------------
+spring:
+  devtools:
+    restart:
+      enabled: false
+  data:
+    cassandra:
+      username: cassandra
+      password: cassandra
+      ssl: false
+      contact-points: ["210.221.235.202"]  #["192.168.99.100"]   내부 docker run 할때 주석해제후 사용.
+      keyspace-name: hc_tracking_keyspace
+      repositories:
+        type: auto
+      port: 9042
+    jpa:
+      repositories:
+        enabled: true
+  kafka:
+    bootstrap-servers: ["210.221.235.202:9092","210.221.235.193:9092","210.221.235.208:9092"]
+    producer:
+      retries: 0
+    consumer:
+      group-id: aereport
+    listener:
+      concurrency: 5
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://210.221.235.202:3306/hc_tracking?useUnicode=true&useSSL=false&characterEncoding=utf8
+      username: hctracking_user
+      password: Hc_tracking1!@
+  jpa:
+    generate-ddl: true
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate.jdbc.batch_size: 200
+      hibernate.jdbc.batch_versioned_data: true
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.enable_lazy_load_no_trans: true
+
+  main:
+    web-application-type: reactive
+
+
+#----------------------------------------------------
+# Mybatis Configuration
+#----------------------------------------------------
+mybatis:
+  type-aliases-package: com.cjenm.dbevent.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+    default-executor-type: reuse
+    auto-mapping-behavior: partial
+    cache-enabled: true
+  mapper-locations: classpath:com/cjenm/dbevent/mybatis/mapper/*.xml
+
+#----------------------------------------------------
+# Mybatis Configuration
+#----------------------------------------------------
+logging.file: logs/application-hc.server.log
+logging:
+  file:
+    max-history: 30
+    max-size: 100MB
+  #  pattern:
+  #    console: "%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level %logger : %msg%n"
+  #    file: "%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level [%thread] %logger : %msg%n"
+  level:
+    root: INFO
+    com.cjenm.tracking: DEBUG
+    org.springframework: INFO
+    org.hibernate: DEBUG
+    org.hibernate.type: DEBUG #TRACE
+    org.hibernate.type.BasicTypeRegistry : WARN
+    web: info
