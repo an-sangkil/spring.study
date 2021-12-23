@@ -1,6 +1,5 @@
-package gateway;
+package gateway.filter;
 
-import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;

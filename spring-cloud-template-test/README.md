@@ -8,4 +8,11 @@
    - router 
    - Circuit Breaker
 
+### url 
+[eureka server](http:/127.0.0.1:8761)
+[ads-server](http:/127.0.0.1:8082)
+[user-server](http:/127.0.0.1:8083)
+[gateway-server](http://127.0.0.1:8080)
+
+
 

@@ -1,5 +1,15 @@
 package gateway.config;
 
+import java.time.Duration;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
+import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
 /**
  * <pre>
  * Description :
@@ -12,15 +22,6 @@ package gateway.config;
  * @since 2021-06-21
  */
 
-import java.time.Duration;
-import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
-import io.github.resilience4j.timelimiter.TimeLimiterConfig;
-import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
-import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
-import org.springframework.cloud.client.circuitbreaker.Customizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 @Configuration
 public class CircuitBreakerConfiguration {
 
@@ -31,7 +32,7 @@ public class CircuitBreakerConfiguration {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .circuitBreakerConfig(CircuitBreakerConfig.custom()
                         .slidingWindowSize(20)
-                        .permittedNumberOfCallsInHalfOpenState(5)
+                        .permittedNumberOfCallsInHalfOpenState(5) // 서킷이 반쯤 열렸을때 허용되는 호출 수, 기본크기 10
                         .failureRateThreshold(50)
                         .waitDurationInOpenState(Duration.ofSeconds(60))
                         .build())

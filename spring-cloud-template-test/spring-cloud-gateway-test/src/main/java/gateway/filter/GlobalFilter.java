@@ -1,12 +1,9 @@
-package gateway;
+package gateway.filter;
 
-import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.util.function.Consumer;
 
 /**
  * <pre>
@@ -20,15 +17,12 @@ import java.util.function.Consumer;
  * @since 2021-06-17
  */
 @Component
-public class UserFilter extends AbstractGatewayFilterFactory<UserFilter.Config> {
-    public UserFilter() {
+public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
+
+    public GlobalFilter() {
         super(Config.class);
     }
 
-    @Override
-    public GatewayFilter apply(String routeId, Consumer<Config> consumer) {
-        return super.apply(routeId, consumer);
-    }
 
     @Override
     public GatewayFilter apply(Config config) {
@@ -37,7 +31,7 @@ public class UserFilter extends AbstractGatewayFilterFactory<UserFilter.Config> 
             System.out.println("start");
 
             System.out.println("exchange.getRequest() value = " + exchange.getRequest());
-            System.out.println("user config data = " + config.toString());
+
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 System.out.println("end");
             }));
@@ -45,14 +39,9 @@ public class UserFilter extends AbstractGatewayFilterFactory<UserFilter.Config> 
         });
     }
 
-    @Data
     public static class Config {
-        private String name;
-        private String message;
 
-        public Config(String name, String message) {
-            this.name = name;
-            this.message = message;
-        }
+
+
     }
 }

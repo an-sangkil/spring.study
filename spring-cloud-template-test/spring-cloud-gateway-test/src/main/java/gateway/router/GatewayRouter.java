@@ -25,6 +25,12 @@ import reactor.core.publisher.Mono;
 @Component
 public class GatewayRouter {
 
+    /**
+     * 서킷 브레이크레이커에 의해 실패된 요청이 있을경우 이쪽으로 리다이렉트된다.
+     *  - 실패된 내용에 대한 응답을 준다.
+     *
+     * @return
+     */
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
         return RouterFunctions.route().path("/fallback", builder -> builder
