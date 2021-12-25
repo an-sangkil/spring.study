@@ -1,7 +1,8 @@
-package ads;
+package com.product;
 
-import io.netty.util.internal.ConstantTimeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -24,12 +25,13 @@ import java.util.concurrent.TimeUnit;
  * @since 2021-06-17
  */
 @Component
-public class UserRouters {
+@Slf4j
+public class ProductRouters {
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(UserHandler userHandler) {
+    public RouterFunction<ServerResponse> routerFunction(ProductHandler productHandler) {
         return
-                RouterFunctions.route(RequestPredicates.GET("/user/get_all")
+                RouterFunctions.route(RequestPredicates.GET("/product/get_all")
                         .and(RequestPredicates.accept(MediaType.ALL)), request -> {
 
                     try {
@@ -41,17 +43,24 @@ public class UserRouters {
 
                     return ServerResponse.ok().body(Mono.just("hello user get all"), String.class);
                 }).and(
-                        RouterFunctions.route(RequestPredicates.GET("/user/userId"), request -> {
-                            String userId = (String) request.attribute("userId").orElseGet(() -> "");
+                        RouterFunctions.route(RequestPredicates.GET("/product/productId"), request -> {
+                            String userId = (String) request.attribute("productId").orElseGet(() -> "");
                             System.out.println(userId);
-                            Mono<String> data = Mono.just("you search , user id equal =" + userId);
+                            Mono<String> data = Mono.just("you search , product id equal =" + userId);
                             return ServerResponse.ok().body(data, String.class);
                         }))
-                        .andRoute(RequestPredicates.GET("/user/save"), userHandler::save)
-                        .andRoute(RequestPredicates.GET("/user/delete"), request -> {
+                        .andRoute(RequestPredicates.GET("/product/save"), productHandler::save)
+                        .andRoute(RequestPredicates.GET("/product/delete"), request -> {
                             Mono<String> bodyData = request.bodyToMono(String.class);
                             return ServerResponse.ok().body(bodyData, String.class);
                         })
+                .and(
+                        RouterFunctions.route(RequestPredicates.GET("/product/notfound_error"),request -> {
+                            log.info("/product/notfound_error call");
+
+                            return ServerResponse.status(HttpStatus.BAD_GATEWAY).body(Mono.just("dd"),String.class);
+                        })
+                )
 
 
                 ;

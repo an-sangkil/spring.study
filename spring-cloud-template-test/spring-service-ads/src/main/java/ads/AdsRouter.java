@@ -1,6 +1,7 @@
 package ads;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -45,12 +46,14 @@ public class AdsRouter {
                 )
 
                 .build();
-
+        // 앞에 항상 같은 path 를 붙이기 위한방법
         RouterFunction<ServerResponse> getRoute = RouterFunctions.route().path("/get/ads", builder -> {
             builder.GET("/today_ads/this_one", adsHandler::todayAds);
             builder.GET(adsHandler::getAdsAll);
         }).GET("/tomorrow/ads",request -> ServerResponse.ok().body(Mono.just("non router path /tomorrow/ads"),String.class)).build();
 
-        return RouterFunctions.route().add(nestRoute).add(getRoute).build();
+        return RouterFunctions.route().add(nestRoute).add(getRoute).build().andRoute(RequestPredicates.GET("/ads/notfound_error"),request -> {
+            return ServerResponse.status(HttpStatus.BAD_GATEWAY).body(Mono.just("dd"),String.class);
+        });
     }
 }

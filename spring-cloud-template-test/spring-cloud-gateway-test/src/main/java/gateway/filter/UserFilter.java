@@ -34,12 +34,11 @@ public class UserFilter extends AbstractGatewayFilterFactory<UserFilter.Config> 
     public GatewayFilter apply(Config config) {
 
         return ((exchange, chain) -> {
-            System.out.println("start");
-
-            System.out.println("exchange.getRequest() value = " + exchange.getRequest());
-            System.out.println("user config data = " + config.toString());
+            System.out.println("user filter - start");
+            //System.out.println("exchange.getRequest() value = " + exchange.getRequest());
+            //System.out.println("user config data = " + config.toString());
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                System.out.println("end");
+                System.out.println("user filter end");
             }));
 
         });
