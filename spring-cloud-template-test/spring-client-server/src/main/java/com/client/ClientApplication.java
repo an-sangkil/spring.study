@@ -1,7 +1,6 @@
-package ads;
+package com.client;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -14,13 +13,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *
  * @author skan
  * @version Copyright (C) 2021 by CJENM|MezzoMedia. All right reserved.
- * @since 2021-06-17
+ * @since 2021/12/27
  */
 @SpringBootApplication
 @EnableFeignClients
-public class ApplicationUser {
-
-    public static void main(String[] args) {
-        SpringApplication.run(ApplicationUser.class);
+public class ClientApplication {
+    public static void main(String[] args) throws Exception{
+        SpringApplication.run(ClientApplication.class, args);
     }
 }
