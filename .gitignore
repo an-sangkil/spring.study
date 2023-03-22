@@ -40,3 +40,5 @@ nbdist/
 
 photon-aereport-web/src/main/resources/application-dev\.yml
 /.jpb/
+
+*.DS_Store

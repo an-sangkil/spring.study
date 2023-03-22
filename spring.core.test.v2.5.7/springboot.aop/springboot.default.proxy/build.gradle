@@ -1,0 +1,15 @@
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-aop')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+springBoot {
+    mainClass = "skan.spring.dynamic.DynamicProxyApplication"
+}
+
+bootJar.enabled=true
+jar.enabled=false

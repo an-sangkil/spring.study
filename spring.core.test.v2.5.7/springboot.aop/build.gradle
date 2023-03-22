@@ -1,0 +1,12 @@
+// 하위프로젝트에서 사용할 모돌 관리
+subprojects {
+    apply from: "${gradleScriptDir}/build.gradle"
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        compileOnly 'org.projectlombok:lombok'
+
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}

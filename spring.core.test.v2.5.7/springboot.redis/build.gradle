@@ -1,0 +1,34 @@
+
+// 하위프로젝트에서 사용할 모돌 관리
+allprojects {
+    apply from: "${gradleScriptDir}/build.gradle"
+    println 'spring redis module : ' + gradleScriptDir
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        compileOnly 'org.projectlombok:lombok'
+
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+
+}
+
+bootJar {
+    enabled = true
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+    if(project.hasProperty('buildNumber')){
+        filesMatching("**/*.properties") {
+            expand( buildNumber: project.getProperty('buildNumber') )
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

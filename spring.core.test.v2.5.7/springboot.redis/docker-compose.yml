@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  redis: ## 서비스명 레디스
+    image: redis:alpine
+    container_name: redis_container
+    hostname: redis_host
+    volumes:
+      - ./redis.d/auth-script:/data
+    command: redis-server
+    ports:
+      - 6379:6379
+
+  mysql: ## 서비스명 mysql
+    depends_on:
+      - redis
+    image: mysql:5.7.36
+    container_name: mysql_test
+    hostname: mysql_test
+    volumes:
+      - ./redis.d/mysql-script/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+
+  # # Boot APP*****************************************
+  spring:
+    depends_on:
+      - redis
+      - mysql
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: redis_test_api
+    hostname: redis_test_api
+    volumes:
+      - ./build/libs/:/app
+    working_dir: /app
+    command:
+      [
+          'java',
+          '-jar',
+          'springboot.redis.jar',
+          # 스프링 프로퍼티값으로 사용할 값을 넣어준다.
+          #'--spring.profiles.active=local',
+
+          # 레디스 호스트를, 레디스컨테이너의 {호스트명,서비스명, 컨네이너명} 으로 넣어준다.
+          '--spring.redis.host=redis_container',
+          '--server.port=8080',
+          '--logging.level.root=info',
+          #'--throttling.feign.clients.api.url=http://${DOMAIN:-localhost}:8080',
+      ]
+    ports: ['8081:8080']

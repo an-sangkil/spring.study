@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+
+# Redis Cluster
+spring:
+  redis:
+    host: localhost
+    port: 6379
+
+# Redis Cluster
+#spring.redis.cluster.nodes=bbp-dev-redis.yni7hj.clustercfg.apn2.cache.amazonaws.com:6379
+#spring.redis.cluster.timeout=5
+#spring.redis.cluster.max-redirects=3

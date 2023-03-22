@@ -1,0 +1,13 @@
+
+### 생성된 방가져오기
+GET http://localhost:8081/room/find-all
+
+### 방만들기
+PUT http://localhost:8081/room/00001
+
+### 생성된 방으로 메세지 전송하기
+POST http://localhost:8081/room/send-message/00001
+Content-Type: application/x-www-form-urlencoded
+
+name=skan&message=test1
+###

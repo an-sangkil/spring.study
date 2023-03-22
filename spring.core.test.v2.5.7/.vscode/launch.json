@@ -1,0 +1,76 @@
+{
+    // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+    // 기존 특성에 대한 설명을 보려면 가리킵니다.
+    // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "jdkPath": "${env:JAVA_HOME}/bin",
+            "cwd": "${fileDirname}",
+            "startupClass": "${fileBasenameNoExtension}",
+            "classpath": [
+                ".",
+                "${fileDirname}"
+            ],
+            "externalConsole": true
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch SrpingApplication",
+            "request": "launch",
+            "mainClass": "skan.SrpingApplication",
+            "projectName": "springboot.cglib.aop"
+        },
+        {
+            "type": "java",
+            "name": "Launch CGLibProxyApplication",
+            "request": "launch",
+            "mainClass": "skan.spring.cglib.CGLibProxyApplication",
+            "projectName": "springboot.default.proxy"
+        },
+        {
+            "type": "java",
+            "name": "Launch DynamicProxyApplication",
+            "request": "launch",
+            "mainClass": "skan.spring.dynamic.DynamicProxyApplication",
+            "projectName": "springboot.default.proxy"
+        },
+        {
+            "type": "java",
+            "name": "Launch SrpingApplication(1)",
+            "request": "launch",
+            "mainClass": "skan.SrpingApplication",
+            "projectName": "springboot.dynamic.aop"
+        },
+        {
+            "type": "java",
+            "name": "Launch RedisApplication",
+            "request": "launch",
+            "mainClass": "com.skan.RedisApplication",
+            "projectName": "springboot.redis"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+// 프로젝트의 플러그인 의존성(라이브러리) 관리를 위한 설정이다.
+buildscript {
+    ext.gradleScriptDir = "${project.getRootDir()}/spring.parent"
+    println 'spring skan study : ' + gradleScriptDir
+
+    // ext : build.gradle 에서 전역번수로 사용하겠다는 의미
+    ext {
+        springBootVersion = '2.5.7'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+
+        // 스프링 부트의 그레들 플러그인 2.5.7을 의존성으로 받겠다는 뜻.
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+    }
+}
+
+

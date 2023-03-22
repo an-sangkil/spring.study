@@ -1,0 +1,29 @@
+/*
+    spring 프로젝트에서 모든 프로젝트에대한 플러그인 관리 담당.
+ */
+
+allprojects {
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
+
+    // 빌드그래들에서 설정한 플러그인 의존성을 적용할것인지 결정하는 부분 ,
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 11
+    repositories {
+        mavenCentral()
+    }
+
+    // 모든 프로젝트에서 사용할 라이브러리 버전 관리
+    dependencyManagement {
+        dependencies {
+            def facebookBusinessSDK = '12.0.0'
+            dependency group: 'com.facebook.business.sdk', name: 'facebook-java-business-sdk', version: "${facebookBusinessSDK}"
+        }
+    }
+}
+
+bootJar.enabled=false
+jar.enabled(false)
